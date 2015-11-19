@@ -15,6 +15,8 @@ var T = new Twit({
 	access_token_secret: process.env.openshift.ACCESS_TOKEN_SECRET || config.access_token_secret || ''
 });
 
+var queue = [];
+
 var getLineWithWord = function ( words ) {
 
 	potentialLines = [];
@@ -117,11 +119,20 @@ rhyme( function ( r ) {
 			var tweet = getSampleCharacters( line );
 			tweet = '@' + handle + ' ' + tweet;
 			var params = { status: tweet, in_reply_to_status_id: id };
+			if ( queue.length < 100 ) {
+				queue.push( params );
+			}
+		}
+
+	});
+
+	setInterval( function () {
+		if ( queue.length > 0 ) {
+			var params = queue.shift();
 			T.post('statuses/update', params, function (err, data, response) {
 				// console.log(data)
 			});
 		}
-
-	});
+	}, 60000 );
 
 });
