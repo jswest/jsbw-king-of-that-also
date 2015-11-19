@@ -6,6 +6,8 @@ var Twit = require( 'twit' ),
 
 var lines = fs.readFileSync( 'data/texts.txt' ).toString().split( '\n' );
 
+process.env.openshift = process.env.openshift || {};
+
 var T = new Twit({
 	consumer_key: process.env.openshift.CONSUMER_KEY || config.consumer_key || '',
 	consumer_secret: process.env.openshift.CONSUMER_SECRET || config.consumer_secret || '',
@@ -41,7 +43,7 @@ var getLineWithWord = function ( words ) {
 var getSampleCharacters = function ( params ) {
 
 	if ( params.line && params.word ) {
-		console.log( params );
+		// console.log( params );
 		var length = 100;
 		if ( params.line.length > length ) {
 
@@ -98,7 +100,7 @@ rhyme( function ( r ) {
 	var stream = T.stream( 'user', { replies: true } );
 
 	stream.on( 'tweet', function ( tweet ) {
-		console.log( tweet );
+		// console.log( tweet );
 		var handle = tweet.user.screen_name;
 		if ( handle !== 'kingofthatalso' ) {
 			var id = tweet.id_str;
@@ -116,7 +118,7 @@ rhyme( function ( r ) {
 			tweet = '@' + handle + ' ' + tweet;
 			var params = { status: tweet, in_reply_to_status_id: id };
 			T.post('statuses/update', params, function (err, data, response) {
-				console.log(data)
+				// console.log(data)
 			});
 		}
 
