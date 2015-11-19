@@ -1,0 +1,13 @@
+{
+  "name": "king-of-that-also",
+  "version": "1.0.0",
+  "description": "A Twitter bot that responds to tweets with selections from KING OF THAT ALSO.",
+  "author": "John West",
+  "license": "ISC",
+  "dependencies": {
+    "natural": "^0.2.1",
+    "rhyme": "0.0.3",
+    "twit": "^2.1.1",
+    "underscore": "^1.8.3"
+  }
+}
